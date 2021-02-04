@@ -10,17 +10,7 @@
   </head>
 
   <body>
-    <header class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container">
-          <%= link_to "勤怠システム" , root_path , id: "logo" %>
-          <nav>
-              <ul class="nav navbar-nav navbar-right">
-                  <li><%= link_to "トップ" , '#' %></li>
-                  <li><%= link_to "ログイン" , '#' %></li>
-              </ul>
-          </nav>
-      </div>
-    </header>
+    <%= render 'layouts/header' %>
     <div class="container">
       <% flash.each do |message_type, msg| %>
         <div class="alert alert-<%= message_type %>">
