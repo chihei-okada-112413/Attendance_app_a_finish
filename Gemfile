@@ -10,6 +10,9 @@ gem 'turbolinks',   '5.0.1'
 gem 'jbuilder',     '2.6.4'
 gem 'bootstrap-sass'
 gem 'bcrypt'
+gem 'faker'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 
 group :development, :test do
   gem 'sqlite3',      '1.3.13'
