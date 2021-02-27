@@ -12,7 +12,7 @@
             <td>氏名　<%= @user.name %></td>
             <td>コード</td>
             <td></td>
-            <td>出勤日数</td>
+            <td>出勤日数　<%= @worked_sum %>日</td>
             <td>締め　<%= l(@last_day, format: :short) %></td>
         </tr>
     </table>
@@ -24,7 +24,7 @@
 </div>
 
 <div class="">
-    <%= link_to "勤怠を編集", "#", class: "btn btn-primary btn-attendance" %>
+    <%= link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary btn-attendance" %>
     </div>
 <div>
     <table class="table table-bordered table-condensed user-table" id="table-attendances">
@@ -52,18 +52,41 @@
             <tr>
                 <td><%= l(day.worked_on, format: :short) %></td>
                 <td><%= $days_of_the_week[day.worked_on.wday] %></td>
+                <td><%= l(day.started_at, format: :time) if day.started_at.present? %></td>
                 <td></td>
+                <td><% if (Date.current == day.worked_on) && day.started_at.nil? %>
+                        <%= link_to "出勤", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %> 
+                    <% end %></td>
+                <td><%= l(day.finished_at, format: :time) if day.finished_at.present? %></td>
                 <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td><% if (Date.current == day.worked_on) && day.started_at.present? && day.finished_at.nil? %>
+        <%= link_to "退勤登録", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+      <% end %></td>
                 
-                <td></td>
-                <td></td>
+                <td>
+                <% if day.started_at.present? && day.finished_at.present? %>
+                <%= str_times = working_time(day.started_at , day.finished_at) %>
+                <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
+                <% end %>
+                </td>
+                <td><%= day.note %></td>
             </tr>
             <% end %>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">累計日数</td>
+                <td colspan="6">総合勤務時間</td>
+                <td>累計在籍時間</td>
+                <td rowspan="2"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><%= @attendances.count %></td>
+                <td colspan="6"><%= format_basic_info(@user.work_time).to_f * @worked_sum %></td>
+                <td><%= format("%.2f", @total_working_times.to_f) %></td>
+            </tr>
+
+        </tfoot>
     </table>
 </div>
 <h1><%= @user.name %>, <%= @user.email %></h1>
