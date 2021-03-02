@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+.user-table tbody tr td {
+  vertical-align:bottom;
+}
+
 .search_user {
 display:inline-block;
 float:right;
@@ -33,6 +37,11 @@ float:right;
   margin-bottom: 10px;
 }
 
+.btn-basic_info-edit {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 /* ユーザー勤怠情報テーブル */
 
 #table-attendances {
@@ -56,6 +65,10 @@ float:right;
 }
 
 .label-user--edit {
+  margin-top: 5px;
+}
+
+.label-basic-info {
   margin-top: 5px;
 }
 
