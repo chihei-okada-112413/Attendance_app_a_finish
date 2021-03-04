@@ -28,6 +28,14 @@ class AttendancesController < ApplicationController
   def edit_one_month
   end
   
+        #if !item[:started_at].nil? && item[:finished_at].blank?
+        
+       # else
+        #attendance = Attendance.find(id)
+        #attendance.update_attributes!(item)
+        #end
+  
+  
   def update_one_month
     ActiveRecord::Base.transaction do # トランザクションを開始
       attendances_params.each do |id, item|

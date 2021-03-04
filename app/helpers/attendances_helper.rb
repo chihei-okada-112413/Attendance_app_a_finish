@@ -1,6 +1,6 @@
 module AttendancesHelper
 
-    TIME_00 = 00
+    TIME_00 = "00"
     TIME_15 = 15
     TIME_30 = 30
     TIME_45 = 45
@@ -24,7 +24,7 @@ module AttendancesHelper
         elsif t < 15 && t >= 0
           TIME_00
         end
-      end  
+    end  
     
     # 出勤時間と退勤時間を受け取り、在社時間を計算して返す。
     def working_time(start, finish)
