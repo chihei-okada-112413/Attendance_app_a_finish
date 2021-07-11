@@ -1,0 +1,78 @@
+<% provide(:class_text, 'overtime-application') %>
+<% provide(:button_text, '変更を送信する') %>
+<%= form_with(model:@user , url: attendances_update_overtime_user_path(@user,@attendance), local: true, method: :patch) do |f| %>
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+      <h1 class="modal-title">残業申請</h1>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+           <table class="table table-bordered table-condensed table-hover" id="table-attendances">
+            <thead>
+                <tr>
+                <th>日付</th>
+                <th>曜日</th>
+                <th>終了予定時間</th>
+                <th>翌日</th>
+                <th>業務処理内容</th>
+                <th>支持者確認㊞</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @attendances.each do |day| %>
+                <%= f.fields_for "attendances[]", day do |attendance| %>
+                    <% if day.worked_on == @attendance.worked_on %>
+                        <tr>
+                        <%= attendance.hidden_field :instructor_confirmation_status, :value => "申請中" %>
+                        <%= attendance.hidden_field :time_year, :value => day.worked_on.year %>
+                        <%= attendance.hidden_field :time_month, :value => day.worked_on.month %>
+                        <%= attendance.hidden_field :time_day, :value => day.worked_on.day %>
+                        <td><%= l(day.worked_on, format: :short) %></td>
+                        <td><%= $days_of_the_week[@attendance.worked_on.wday] %> </td>
+                        <td>
+                        <%= attendance.label :scheduled_end_time, class: "label-overtime_application hidden" %>
+                        <%= attendance.time_select :scheduled_end_time, :include_blank => true, class: "form-control" %></td>
+                        <td><%= attendance.label :next_day, class: "check_box inline checkbox-over_time_application ", for: "next_day" do %>
+                            <%= attendance.check_box :next_day, checked: false, id: "next_day" %>
+                        <% end %>
+                        </td>
+                        <td><%= attendance.label :office_work_contents, class: "label-overtime_application hidden" %>
+                        <%= attendance.text_field :office_work_contents, class: "form-control" %>
+                        </td>
+                        <td>
+                        <% if @user.name == "上長1"%>
+                        <%= attendance.label :instructor_confirmation_stamp, class: "label-#{yield(:class_text)} hidden" %>
+                        <%= attendance.select :instructor_confirmation_stamp,[[""],["上長2"]] ,class: "form-control" %>
+
+                        <% elsif @user.name == "上長2"%>
+                        <%= attendance.label :instructor_confirmation_stamp, class: "label-#{yield(:class_text)} hidden" %>
+                        <%= attendance.select :instructor_confirmation_stamp,[[""],["上長1"]] ,class: "form-control" %>
+
+                        <% else %>
+                        <%= attendance.label :instructor_confirmation_stamp, class: "label-#{yield(:class_text)} hidden" %>
+                        <%= attendance.select :instructor_confirmation_stamp,[[""],["上長1"],["上長2"]] ,class: "form-control" %>
+
+                        <%#= day.worked_on.year %>
+                        <% end %>
+                        </td>
+                        </tr>
+                    <% end %>
+                <% end %>
+                <% end %>
+            </tbody>
+            </table>
+        </div><div class="center">
+      </div>
+    </div>
+    <div class="center">
+    <%= f.submit "#{yield(:button_text)}", class: "btn btn-lg btn-primary" %>
+  </div>
+  </div>
+  </div>
+</div>
+<% end %>

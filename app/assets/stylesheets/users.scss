@@ -9,6 +9,10 @@
   vertical-align:bottom;
 }
 
+.table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
+  border-bottom-width: 1px;
+}
+
 .search_user {
 display:inline-block;
 float:right;
@@ -35,6 +39,15 @@ float:right;
 .btn-users-show {
   margin-top: -10px;
   margin-bottom: 10px;
+}
+
+.btn-users-log {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.btn-users-text {
+  margin-bottom: 5px;
 }
 
 .btn-basic_info-edit {
@@ -72,11 +85,35 @@ float:right;
   margin-top: 5px;
 }
 
+.label-user--all {
+  margin-top: 5px;
+}
+
 .btn-user--edit {
   margin-top: 10px;
 }
 
+.btn-user--all {
+  margin: 10px;
+}
+
+.btn-user--all--csv {
+  margin-top: 10px;
+}
+
 #table-users {
+  td {
+    vertical-align: middle;
+  }  
+}
+
+#table-susers {
+  th {
+    vertical-align: middle;
+    text-align: center;
+    width:50%;
+    border-bottom: 1px;
+  }
   td {
     vertical-align: middle;
   }  

@@ -1,18 +1,117 @@
 <% provide(:title, 'All Users') %>
-<% if params[:sword].present? %>
-<h1>検索結果</h1>
-<% else %>
-<h1>ユーザー一覧</h1>
-<% end %>
-
-<div class="search_user">
-    <%= form_with(url: users_path, method: :get ,local: true , class: "from-inline")  do |f| %>
-            <%= f.label :sword, "検索ワード", class: "label-login form-inline" %>
-            <%= f.text_field :sword, class: "form-cont mb-2" %>
-            <%= f.submit "検索", class: "btn btn-primary" %>
+<% provide(:class_text, 'user--all') %>
+<% if current_user.admin? && current_user.superior? %>
+    <% if params[:sword].present? %>
+    <h1>検索結果</h1>
+    <% else %>
+    <h1>ユーザー一覧</h1>
     <% end %>
+<% else%>
+    <h1>ユーザー一覧</h1>
+<% end%>
+
+<div class="col-md-12">
+    <table class="col-md-12">
+        <tbody>
+            <tr>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= form_tag import_users_path, multipart: true do %>
+                    　<%= file_field_tag :file %>
+                      <%= submit_tag "CSVをインポート", class: "btn  btn-primary btn-user--all--csv" %>
+                    <% end %>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="col-md-12">
+        <thead>
+            <tr>
+            <td style="padding:10px 0;">
+            </td>
+            </tr>
+        </thead>
+            <% @users.each do |user| %>
+            <% if !user.admin? %>
+            <tr>
+                <td><%= user.name %></td>
+            </tr>
+            <tr>
+                <td><%= link_to "削除" , user, method: :delete, data: { confirm: "#{user.name}を削除してもよろしいですか？"}, class: "btn btn-primary btn_users" %></td>
+            </tr>
+            <tr>
+                <td><%# link_to "編集", edit_basic_info_user_path(user), class: "btn btn-primary btn-rg btn-users" %>
+                <p style="background-color:#f5f5f5;">
+                <button class="btn btn-lg btn-primary  btn-user--all" type="button" data-toggle="collapse" data-target="#collapseExample-<%= user.id %>" aria-expanded="false" aria-controls="collapseExample-<%= user.id %>">
+                編集
+                </button>
+                </p>
+                <div class="collapse" id="collapseExample-<%= user.id %>">
+                <div class="card card-body">
+
+                <div class="col-md-12">
+                    <%= form_with(model: user, url: update_basic_info_user_path(user), local: true, method: :patch) do |f| %>
+                        <%# render 'shared/error_messages', object: @user %>
+
+                        <%= f.label :name, class: "label-#{yield(:class_text)}" %>
+                        <%= f.text_field :name, class: "form-control" %>
+
+                        <%= f.label :email, class: "label-#{yield(:class_text)}" %>
+                        <%= f.email_field :email, class: "form-control" %>
+
+                        <%= f.label :affiliation, class: "label-#{yield(:class_text)}" %>
+                        <%= f.text_field :affiliation, class: "form-control" %>
+
+                        <%= f.label :employee_number, class: "label-#{yield(:class_text)}" %>
+                        <%= f.text_field :employee_number, class: "form-control" %>
+
+                        <%= f.label :uid, class: "label-#{yield(:class_text)}" %>
+                        <%= f.text_field :uid, class: "form-control" %>
+
+                        <%= f.label :password, class: "label-#{yield(:class_text)}" %>
+                        <%= f.password_field :password, class: "form-control" %>
+
+                        <%= f.label :basic_work_time, class: "label-#{yield(:class_text)}" %>
+                        <%= f.time_field :basic_work_time, class: "form-control" %>
+
+                        <%= f.label :designated_work_start_time, class: "label-#{yield(:class_text)}" %>
+                        <%= f.time_field :designated_work_start_time, class: "form-control" %>
+
+                        <%= f.label :designated_work_end_time, class: "label-#{yield(:class_text)}" %>
+                        <%= f.time_field :designated_work_end_time, class: "form-control" %>
+
+                        <div class="center btn-basic_info-edit">
+                        <%= f.submit "編集する", class: "btn btn-primary active btn-block" %>
+                        </div>
+                    <% end %>
+                    </div>
+                </div>
+                </div>
+                </td>
+            </tr>
+            <% end %>
+            <% end %>
+    </table>
 </div>
 
+
+
+
+<% if current_user.admin? && current_user.superior? %>
+    <div class="search_user">
+        <%= form_with(url: users_path, method: :get ,local: true , class: "from-inline")  do |f| %>
+                <%= f.label :sword, "検索ワード", class: "label-login form-inline" %>
+                <%= f.text_field :sword, class: "form-cont mb-2" %>
+                <%= f.submit "検索", class: "btn btn-primary" %>
+        <% end %>
+    </div>
+<% end %>
+
+<% if current_user.admin? && current_user.superior? %>
 <div class="col-md-10 col-md-offset-1">
     <%= will_paginate %>
     <table class="table table-condensed table-hover" id="table-users">
@@ -40,3 +139,4 @@
     </table>
     <%= will_paginate %>
 </div>
+<% end %>

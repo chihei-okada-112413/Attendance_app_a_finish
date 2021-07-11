@@ -1,6 +1,7 @@
 <% provide(:title, "@user.name") %>
-<%= form_with(model: @user, url: attendances_update_one_month_user_path(date: @first_day), local: true, method: :patch) do |f| %>
+<%= form_with(model: @user, url: attendances_update_attendances_change_user_path(date: @first_day,change_application_status: "申請中" ), local: true, method: :patch) do |f| %>
 <div>
+<%= render 'shared/error_messages_at', object: @attendance %>
     <h1>勤怠編集画面</h1>
     <table class="table table-bordered table-condensed table-hover" id="table-attendances">
         <thead>
@@ -9,37 +10,73 @@
                 <th>曜日</th>
                 <th>出社</th>
                 <th>退社</th>
+                <th>翌日</th>
                 <th>在社時間</th>
                 <th>備考</th>
-                <th>残業指示</th>
-                <th>指示者</th>
+                <th>指示者確認印</th>
             </tr>
         </thead>
         
         <tbody>
             <% @attendances.each do |day| %>
             <%= f.fields_for "attendances[]", day do |attendance| %>
+            
             <tr>
+                <%#= attendance.hidden_field :m, :value => attendance.worked_on.month %>
+
                 <td><%= l(day.worked_on, format: :short) %></td>
                 <td><%= $days_of_the_week[day.worked_on.wday] %></td>
                 <% if (Date.current < day.worked_on) %>
-                    <td><%= attendance.time_field :started_at,  readonly: true, class: "form-control" %></td>
-                    <td><%= attendance.time_field :finished_at,  readonly: true, class: "form-control" %></td>
+                <%#= debugger %>
+                    <td>
+                    <%= attendance.label :change_application_started_time, class: "label-chage_application hidden" %>
+                    <%= attendance.time_select :change_application_started_time, include_blank: true,  class: "form-control" %></td>
+
+                    <td>
+                    <%= attendance.label :change_application_finished_time, class: "label-chage_application hidden" %>
+                    <%= attendance.time_select :change_application_finished_time, include_blank: true, class: "form-control" %></td>
                 <% else %>
-                    <td><%= attendance.time_field :started_at,  class: "form-control" %></td>
-                    <td><%= attendance.time_field :finished_at,  class: "form-control" %></td>
+                    <td>
+                    <%= attendance.label :change_application_started_time, class: "label-chage_application hidden" %>
+                    <%= attendance.time_select :change_application_started_time, include_blank: true,  class: "form-control" %></td>
+                    <td>
+                    <%= attendance.label :change_application_finished_time, class: "label-chage_application hidden" %>
+                    <%= attendance.time_select :change_application_finished_time, include_blank: true,  class: "form-control" %></td>
                 <% end %>
-                <td><% if day.started_at.present? && day.finished_at.present? %>
-                        <%= working_time(day.started_at, day.finished_at) %>
-                    <% end %>
+                <td><%= attendance.label :change_application_next_day, class: "check_box inline checkbox-over_time_application", for: "change_application_next_day" do %>
+                            <%= attendance.check_box :change_application_next_day, checked: false, id: "change_application_next_day" %>
+                        <% end %></td>
+                <td>
+                <% if day.change_application_started_time.present? && day.change_application_finished_time.present? %>
+                <%#= debugger%>
+                <% if day.change_application_next_day == 0 %>
+                <%= working_time_chage(working_time_start_chage(day.change_application_started_time), working_time_finish_chage(day.change_application_finished_time)) %>
+                <% else %>
+                <%= working_time_chage_next(working_time_start_chage(day.change_application_started_time), day.change_application_finished_time) %>
+                <%# @over_times = @total_working_times.to_f + str_times.to_f %>
+                <%#= debugger%>
+                <% end %>
+                <% end %>
+
                 </td>
                 <% if (Date.current < day.worked_on) %>
-                <td><%= attendance.text_field :note, readonly: true, class: "form-control" %></td>
+                <td><%= attendance.text_field :change_application_note, class: "form-control" %></td>
                 <% else %>
-                <td><%= attendance.text_field :note, class: "form-control" %></td>
+                <td><%= attendance.text_field :change_application_note, class: "form-control" %></td>
                 <% end %>
-                <td></td>
-                <td></td>
+                
+                <td>
+                <% if @user.name == "上長1" %>
+                <%= attendance.label :change_application_stamp, class: "label-#{yield(:class_text)} hidden" %>
+                        <%= attendance.select :change_application_stamp,[["上長2"]] ,include_blank: true, celected: nil , class: "form-control" %>
+                <% elsif @user.name == "上長2"%>
+                <%= attendance.label :change_application_stamp, class: "label-#{yield(:class_text)} hidden" %>
+                        <%= attendance.select :change_application_stamp,[["上長1"]] , include_blank: true ,class: "form-control" %>
+                <% else %>
+                <%= attendance.label :change_application_stamp, class: "label-#{yield(:class_text)} hidden" %>
+                        <%= attendance.select :change_application_stamp,[["上長1"],["上長2"]] ,include_blank: true, selected: nil, class: "form-control" %>
+                <% end %>
+                </td>
             </tr>
             <% end %>
             <% end %>

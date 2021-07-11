@@ -1,0 +1,70 @@
+<% provide(:title, 'attendances change history log') %>
+<h1>勤怠ログ</h1>
+<div class="col-md-12">
+<%= form_with(url: attendances_attendances_change_history_log_user_path, method: :get ,local: true) do |f| %>
+    <table class="table table-condensed table-bordered user-table" id="table-attendances">
+        <thead>
+                <tr>
+                <th colspan="2">
+                <%= f.submit "リセット", class: "btn btn-default" %>
+                </th>
+                </tr>
+                    <tr>
+                    <td><%= f.label :y, class: "label-#{yield(:class_text)} hidden" %>
+                        <%= f.select :y,[["年"],["2021"],["2022"],["2023"]] ,class: "form-control" %></td>
+                        <td><%= @y %></td>
+                    </tr>
+
+                    <tr>
+                    <td><%= f.label :m, class: "label-#{yield(:class_text)} hidden" %>
+                        <%= f.select :m,[["月"],["1"],["2"],["3"],["4"],["5"],["6"],["7"],["8"],["9"],["10"],["11"],["12"],] ,class: "form-control" %></td>
+                        <td><%= @m %></td>
+                    </tr>
+        
+            <tr>
+                
+                <th>
+                    日付
+                </th>
+                <th>
+                    変更前出社時間
+                </th>
+                <th>
+                    変更前退社時間
+                </th>
+                <th>
+                    変更後出社
+                </th>
+                <th>
+                    変更後退社
+                </th>
+                <th>
+                    指示者
+                </th>
+                <th>
+                    承認日
+                </th>
+            </tr>
+        </thead>
+        
+        <% @attendances.each do |attendance| %>
+            <tr>
+                <td><%= l(attendance.worked_on, format: :short) %></td>
+                <td><%= l(attendance.before_change_started_time, format: :time_h).to_i if attendance.before_change_started_time.present? %>：
+                        <%= time_fix(l(attendance.before_change_started_time, format: :time_m).to_i) if attendance.before_change_started_time.present? %></td>
+                <td><%= l(attendance.before_change_finish_time, format: :time_h).to_i if attendance.before_change_finish_time.present? %>：
+                        <%= time_fix(l(attendance.before_change_finish_time, format: :time_m).to_i) if attendance.before_change_finish_time.present? %></td>
+
+                <td><%= l(attendance.change_application_started_time, format: :time_h).to_i if attendance.change_application_started_time.present? %>：
+                        <%= time_fix(l(attendance.change_application_started_time, format: :time_m).to_i) if attendance.change_application_started_time.present? %></td>
+                <td><%= l(attendance.change_application_finished_time, format: :time_h).to_i if attendance.change_application_finished_time.present? %>：
+                        <%= time_fix(l(attendance.change_application_finished_time, format: :time_m).to_i) if attendance.change_application_finished_time.present? %></td>
+                <td><%= attendance.change_application_stamp %></td>
+                <td><%= attendance.updated_at.to_date %></td>
+            </tr>
+        <% end %>
+    </table>
+    <% end %>
+</div>
+<%#= debugger %>
+

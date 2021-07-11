@@ -1,0 +1,230 @@
+<% provide(:class_text, 'attendances-change-approval') %>
+<% provide(:button_text, '変更を送信する') %>
+<div class="modal-dialog modal-lg modal-dialog-center">
+<%= form_with(model:@user , url: attendances_update_attendances_change_approval_user_path(@user,@attendances), local: true, method: :patch) do |f| %>
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <% if current_user.name == "上長1" %>
+    <% @users1.each do |user| %>
+      <h1 class="modal-title"><%= user.name %>からの勤怠変更申請</h1>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+           <table class="table table-bordered table-condensed table-hover" id="table-attendances">
+            <thead>
+                <tr>
+                    <th colspan="2" rowspan="2"></th>
+                    
+                    <th colspan="4">変更前</th>
+                    
+                    <th colspan="4">変更後</th>
+                    
+                    <th colspan="4" rowspan="2"></th>
+                    
+                </tr>
+                <tr>
+                    
+                    <th colspan="2">出社</th>
+                    
+                    <th colspan="2">退社</th>
+                    
+                    <th colspan="2">出社</th>
+                    
+                    <th colspan="2">退社</th>
+                    
+                
+                </tr>
+                <tr>
+                <th>日付</th>
+                <th>曜日</th>
+                <th>時</th>
+                <th>分</th>
+                <th>時</th>
+                <th>分</th>
+                <th>時</th>
+                <th>分</th>
+                <th>時</th>
+                <th>分</th>
+                <th>備考</th>
+                <th>支持者確認印</th>
+                <th>変更</th>
+                <th>勤怠を確認する</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+            <% user.attendances.each do |day| %>
+            <%# debugger %>
+                <%= f.fields_for "attendances[]", day do |attendance| %>
+                <% if day.change_application_status == "申請中" %>
+                        <tr>
+                        <%= attendance.hidden_field :change_application_status, :value => "承認" %>
+
+                        <td><%= l(day.worked_on, format: :short) %></td>
+                        
+                        <td><%= $days_of_the_week[day.worked_on.wday] %> </td>
+                        
+                        <td><%= l(day.started_at, format: :time_h).to_i if day.started_at.present? %></td>
+
+                        <td>
+                        <%= time_fix(l(day.started_at, format: :time_m).to_i) if day.finished_at.present? %>
+                        </td>
+
+                        <td><%= l(day.started_at, format: :time_h).to_i if day.finished_at.present? %></td>
+
+                        <td>
+                        <%= time_fix(l(day.finished_at, format: :time_m).to_i) if day.finished_at.present? %>
+                        </td>
+                        
+                        <td><%= l(day.change_application_started_time, format: :time_h).to_i if day.change_application_started_time.present? %></td>
+
+                        <td>
+                        <%= time_fix(l(day.change_application_started_time, format: :time_m).to_i) if day.change_application_finished_time.present? %>
+                        </td>
+
+                        <td><%= l(day.change_application_finished_time, format: :time_h).to_i if day.change_application_started_time.present? %></td>
+                        
+                        <td>
+                        <%= time_fix(l(day.change_application_finished_time, format: :time_m).to_i) if day.change_application_finished_time.present? %>
+                        </td>
+
+                        <td>
+                        <%= day.change_application_note %>
+                        </td>
+                        <td>
+                        <%= attendance.label :change_application_status, class: "label-#{yield(:class_text)} hidden" %>
+                        <%= attendance.select :change_application_status,[["なし"],["申請中"],["承認"],["否認"]] ,class: "form-control" %>
+                        </td>
+                        <td><%= attendance.label :change_application_change, class: "check_box inline checkbox-over_time_application", for: "next_day" do %>
+                            <%= attendance.check_box :change_application_change, checked: false, id: "change_application_change" %>
+                        <% end %></td>
+                        <td><%= link_to "確認", user_path(user, usernow: @user.id), class: "btn btn-primary" %></td>
+                        </tr>
+                        <% end %>
+                        <% end %>
+                        <% end %>
+            </tbody>
+            </table>
+        </div>
+        <div class="clearfix"></div>
+      <% end %>
+      <% end %>
+
+
+    <% if current_user.name == "上長2" %>
+    <% @users2.each do |user| %>
+      <h1 class="modal-title"><%= user.name %>からの勤怠変更申請</h1>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+           <table class="table table-bordered table-condensed table-hover" id="table-attendances">
+            <thead>
+                <tr>
+                    <th colspan="2" rowspan="2"></th>
+                    
+                    <th colspan="4">変更前</th>
+                    
+                    <th colspan="4">変更後</th>
+                    
+                    <th colspan="4" rowspan="2"></th>
+                    
+                </tr>
+                <tr>
+                    
+                    <th colspan="2">出社</th>
+                    
+                    <th colspan="2">退社</th>
+                    
+                    <th colspan="2">出社</th>
+                    
+                    <th colspan="2">退社</th>
+                    
+                
+                </tr>
+                <tr>
+                <th>日付</th>
+                <th>曜日</th>
+                <th>時</th>
+                <th>分</th>
+                <th>時</th>
+                <th>分</th>
+                <th>時</th>
+                <th>分</th>
+                <th>時</th>
+                <th>分</th>
+                <th>備考</th>
+                <th>支持者確認印</th>
+                <th>変更</th>
+                <th>勤怠を確認する</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+            <% user.attendances.each do |day| %>
+            <%# debugger %>
+                <%= f.fields_for "attendances[]", day do |attendance| %>
+                <% if day.change_application_status == "申請中" %>
+                        <tr>
+                        <%= attendance.hidden_field :change_application_status, :value => "承認" %>
+
+                        <td><%= l(day.worked_on, format: :short) %></td>
+                        
+                        <td><%= $days_of_the_week[day.worked_on.wday] %> </td>
+                        
+                        <td><%= l(day.started_at, format: :time_h).to_i if day.started_at.present? %></td>
+
+                        <td>
+                        <%= time_fix(l(day.started_at, format: :time_m).to_i) if day.finished_at.present? %>
+                        </td>
+
+                        <td><%= l(day.started_at, format: :time_h).to_i if day.finished_at.present? %></td>
+
+                        <td>
+                        <%= time_fix(l(day.finished_at, format: :time_m).to_i) if day.finished_at.present? %>
+                        </td>
+                        
+                        <td><%= l(day.change_application_started_time, format: :time_h).to_i if day.change_application_started_time.present? %></td>
+
+                        <td>
+                        <%= time_fix(l(day.change_application_started_time, format: :time_m).to_i) if day.change_application_finished_time.present? %>
+                        </td>
+
+                        <td><%= l(day.change_application_finished_time, format: :time_h).to_i if day.change_application_started_time.present? %></td>
+                        
+                        <td>
+                        <%= time_fix(l(day.change_application_finished_time, format: :time_m).to_i) if day.change_application_finished_time.present? %>
+                        </td>
+
+                        <td>
+                        <%= day.change_application_note %>
+                        </td>
+                        <td>
+                        <%= attendance.label :change_application_status, class: "label-#{yield(:class_text)} hidden" %>
+                        <%= attendance.select :change_application_status,[["なし"],["申請中"],["承認"],["否認"]] ,class: "form-control" %>
+                        </td>
+                        <td><%= attendance.label :change_application_change, class: "check_box inline checkbox-over_time_application", for: "next_day" do %>
+                            <%= attendance.check_box :change_application_change, checked: false, id: "change_application_change" %>
+                        <% end %></td>
+                        <td><%= link_to "確認", user_path(user, usernow: @user.id), class: "btn btn-primary" %></td>
+                        </tr>
+                        <% end %>
+                        <% end %>
+                        <% end %>
+            </tbody>
+            </table>
+        </div>
+        <div class="clearfix"></div>
+      <% end %>
+      <% end %>
+      </div>
+      <div class="center">
+    <%= f.submit "#{yield(:button_text)}", class: "btn btn-lg btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
