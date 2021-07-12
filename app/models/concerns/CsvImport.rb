@@ -29,10 +29,10 @@ module CsvImport
  
  
   return errors if errors.present?
-  
+end
   # 一括登録
   User.import users
  
   return []
-  end
+  
  end
