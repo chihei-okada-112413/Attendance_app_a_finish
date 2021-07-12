@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.56.0](https://github.com/heroku/cli/compare/v7.55.0...v7.56.0) (2021-06-29)
+
+**Note:** Version bump only for package heroku
+
+
+
+
+
+# [7.55.0](https://github.com/heroku/cli/compare/v7.54.1...v7.55.0) (2021-06-25)
+
+**Note:** Version bump only for package heroku
+
+
+
+
+
+## [7.54.1](https://github.com/heroku/cli/compare/v7.54.0...v7.54.1) (2021-06-08)
+
+**Note:** Version bump only for package heroku
+
+
+
+
+
+# [7.54.0](https://github.com/heroku/cli/compare/v7.47.10...v7.54.0) (2021-05-18)
+
+
+### Features
+
+* upgrade node to 12.21.0 ([fb27477](https://github.com/heroku/cli/commit/fb274776ea5ed28d31cb8a53e6cfb6819e6ef4a9))
+
+
+
+
+
+## [7.53.1](https://github.com/heroku/cli/compare/v7.53.0...v7.53.1) (2021-05-05)
+
+**Note:** Version bump only for package heroku
+
+
+
+
+
+# [7.53.0](https://github.com/heroku/cli/compare/v7.52.0...v7.53.0) (2021-04-27)
+
+**Note:** Version bump only for package heroku
+
+
+
+
+
+# [7.52.0](https://github.com/heroku/cli/compare/v7.51.0...v7.52.0) (2021-04-07)
+
+**Note:** Version bump only for package heroku
+
+
+
+
+
+# [7.51.0](https://github.com/heroku/cli/compare/v7.50.0...v7.51.0) (2021-03-17)
+
+
+### Features
+
+* upgrade node to 12.21.0 ([fb27477](https://github.com/heroku/cli/commit/fb274776ea5ed28d31cb8a53e6cfb6819e6ef4a9))
+
+
+
+
+
 # [7.50.0](https://github.com/heroku/cli/compare/v7.49.1...v7.50.0) (2021-03-02)
 
 **Note:** Version bump only for package heroku
