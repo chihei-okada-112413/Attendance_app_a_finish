@@ -27,9 +27,10 @@ module CsvImport
      errors.push({:row_num => row_number, :messages => user.errors.full_messages})
    end
  
- 
+  }
   return errors if errors.present?
-end
+  
+  
   # 一括登録
   User.import users
  
