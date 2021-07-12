@@ -26,7 +26,7 @@ module CsvImport
    else
      errors.push({:row_num => row_number, :messages => user.errors.full_messages})
    end
- 
+  end
   }
   return errors if errors.present?
   
