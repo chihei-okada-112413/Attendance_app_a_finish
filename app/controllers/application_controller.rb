@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
       one_month.each { |day| @user.attendances.create!(worked_on: day)}
     end
     @attendances = @user.attendances.where(worked_on: @first_day..@last_day).order(:worked_on)
-    debugger
+    #debugger
     end
     
   rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
