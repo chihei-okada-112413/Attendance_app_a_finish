@@ -1,7 +1,7 @@
 <% provide(:class_text, 'attendances-application-approval') %>
 <% provide(:button_text, '変更を送信する') %>
 <div class="modal-dialog modal-lg modal-dialog-center">
-<%= form_with(model:@user , url: attendances_update_attendances_application_approval_user_path(@user), local: true, method: :patch) do |f| %>
+<%= form_with(model:@user , url: attendances_update_attendances_application_approval_user_path(@user,@attendances), local: true, method: :patch) do |f| %>
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -3,7 +3,7 @@ class AttendancesController < ApplicationController
   before_action :logged_in_user, only: [:update, :edit_one_month, :overtime_application, :update_overtime, :overtime_application_approval, :update_application , :update_overtime_approval,:attendances_change_paramspplication_approval,:update_attendances_change_approval]
   before_action :admin_or_correct_user, onry: [:update, :edit_one_month, :update_one_month, :overtime_application, :update_overtime, :overtime_application_approval, 
   :update_overtime_approval, :update_application, :update_attendances_application ,:attendances_application_approval,:update_attendances_application_approval, :update_attendances_change, :attendances_change_approval, :attendances_change_history_log]
-  before_action :set_one_month, only: [:edit_one_month, :overtime_application, :overtime_application_approval, :update_attendances_application ,:attendances_application_approval,:update_attendances_application_approval, :update_attendances_change_approval, :attendances_change_history_log, :update_attendances_change]
+  before_action :set_one_month, only: [:edit_one_month, :overtime_application, :overtime_application_approval, :update_attendances_application ,:update_attendances_application_approval, :update_attendances_change_approval, :attendances_change_history_log, :update_attendances_change]
   
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
   
