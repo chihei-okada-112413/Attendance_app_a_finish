@@ -9,7 +9,7 @@
       </button>
     </div>
     <% if current_user.name == "上長1" %>
-    <% @users1.each do |user| %>
+    <% @users_attendances_application_approval_jyotyo_a.each do |user| %>
       <h1 class="modal-title"><%= user.name %>からの一か月分の勤怠申請</h1>
     <div class="modal-body">
       <div class="row">
@@ -50,7 +50,7 @@
       <% end %>
 
 <% if current_user.name == "上長2" %>
-    <% @users2.each do |user| %>
+    <% @users_attendances_application_approval_jyotyo_b.each do |user| %>
       <h1 class="modal-title"><%= user.name %>からの一か月分の勤怠申請</h1>
     <div class="modal-body">
       <div class="row">

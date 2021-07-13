@@ -140,11 +140,11 @@ class AttendancesController < ApplicationController
   def attendances_change_approval
     #@users = User.where(id: Attendance.where(change_application_status: "申請中", ).select(:user_id))
     #@users1 = User.where(id: Attendance.where(change_application_status: "申請中", change_application_stamp: "上長1",).select(:user_id), superior: true)
-    @users1 = User.where(id: Attendance.where(change_application_status: "申請中", change_application_stamp: "上長1").select(:user_id))#.where("name = ? or superior = ?", "上長2", "false")
+    @users_attendances_change_approval_jyotyo_a = User.where(id: Attendance.where(change_application_status: "申請中", change_application_stamp: "上長1").select(:user_id))#.where("name = ? or superior = ?", "上長2", "false")
     #@users1 = @users1.where("name: '上長2' and  ")
     #,name: "上長2", superior: "true"),User.where(id: Attendance.where(change_application_status: "申請中", change_application_stamp: "上長1").select(:user_id), superior: "false"))
     
-    @users2 = User.where(id: Attendance.where(change_application_status: "申請中", change_application_stamp: "上長2").select(:user_id))
+    @users_attendances_change_approval_jyotyo_b = User.where(id: Attendance.where(change_application_status: "申請中", change_application_stamp: "上長2").select(:user_id))
 
     @attendance = Attendance.where(instructor_confirmation_status: "申請中")
   end
@@ -187,8 +187,8 @@ class AttendancesController < ApplicationController
 
   # 一か月分の勤怠 申請 確認
   def attendances_application_approval
-    @users1 = User.where(id: Attendance.where(month_attendances_approval_status: "申請中", month_attendances_approval_stamp: "上長1").select(:user_id)
-    @users2 = User.where(id: Attendance.where(month_attendances_approval_status: "申請中", month_attendances_approval_stamp: "上長2").select(:user_id)
+    @users_attendances_application_approval_jyotyo_a = User.where(id: Attendance.where(month_attendances_approval_status: "申請中", month_attendances_approval_stamp: "上長1").select(:user_id))
+    @users_attendances_application_approval_jyotyo_b = User.where(id: Attendance.where(month_attendances_approval_status: "申請中", month_attendances_approval_stamp: "上長2").select(:user_id))
     #@attendances = Attendance.where(month_attendances_approval_status: "申請中").group(:month)
     #debugger
   end
