@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-            <% user.attendances.each do |day| %>
+            <% user.attendances.group(:month).having('count(*) >=2').each do |day| %>
             <%= f.fields_for "attendances[]",day do |attendance| %>
                 <% if day.month_attendances_approval_status == "申請中" %>
                         <tr>
