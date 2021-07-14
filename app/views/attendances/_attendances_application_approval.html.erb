@@ -8,7 +8,7 @@
         <span aria-hidden="true">×</span>
       </button>
     </div>
-    <% if current_user.name == "上長1" %>
+    <% if @user.name == "上長1" %>
     <% @users_attendances_application_approval_jyotyo_a.each do |user| %>
       <h1 class="modal-title"><%= user.name %>からの一か月分の勤怠申請</h1>
     <div class="modal-body">
@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-            <% user.attendances.group(:month).each do |day| %>
+            <% user.attendances.each do |day| %>
             <%= f.fields_for "attendances[]",day do |attendance| %>
                 <% if day.month_attendances_approval_status == "申請中" %>
                         <tr>
@@ -39,9 +39,9 @@
                         <% end %></td>
                         <td><%= link_to "確認", user_path(user, usernow: @user.id), class: "btn btn-primary" %></td>
                         </tr>
-                        <% end %>
-                        <% end %>
-                        <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
             </tbody>
             </table>
         </div>
@@ -49,7 +49,7 @@
       <% end %>
       <% end %>
 
-<% if current_user.name == "上長2" %>
+<% if @user.name == "上長2" %>
     <% @users_attendances_application_approval_jyotyo_b.each do |user| %>
       <h1 class="modal-title"><%= user.name %>からの一か月分の勤怠申請</h1>
     <div class="modal-body">
