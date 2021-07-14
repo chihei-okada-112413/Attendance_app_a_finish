@@ -24,9 +24,10 @@
                 </tr>
             </thead>
             <tbody>
-            <% user.attendances.group(:month).having('count(*) >=2').each do |day| %>
+            <% user.attendances.each do |day| %>
             <%= f.fields_for "attendances[]",day do |attendance| %>
                 <% if day.month_attendances_approval_status == "申請中" %>
+                <% debugger %>
                         <tr>
                         <%= attendance.hidden_field :ap_month, value: day.month %>
                         <td><%= day.month.delete(user.uid) %>月</td>
