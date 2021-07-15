@@ -27,41 +27,41 @@
     <% if !current_user.admin? %>
         
         <% if current_user.superior? && !@user_now && current_user.name=="上長1" %>
-            <% if @countapproval1 > 0 %>
-                <%= link_to "【所属長承認申請のお知らせ】", attendances_attendances_application_approval_user_path(@user), remote: true, style: "color:red; text-decoration: none;" %><%= link_to "#{@countapproval1}件の通知があります", attendances_attendances_application_approval_user_path(@user), remote: true, style: "font-weight:bold; border:solid 1px; padding:1px; color:red; text-decoration: none;" %><br />
-            <% elsif @countapproval1 == 0 %>
+            <% if @countapproval_jyotyo_a > 0 %>
+                <%= link_to "【所属長承認申請のお知らせ】", attendances_attendances_application_approval_user_path(@user), remote: true, style: "color:red; text-decoration: none;" %><%= link_to "#{@countapproval_jyotyo_a}件の通知があります", attendances_attendances_application_approval_user_path(@user), remote: true, style: "font-weight:bold; border:solid 1px; padding:1px; color:red; text-decoration: none;" %><br />
+            <% elsif @countapproval_jyotyo_a == 0 %>
                 【所属長承認申請のお知らせ】<br />
             <% end %>
 
-            <% if @countchange1 > 0 %>
-                <%= link_to "【勤怠変更申請のお知らせ】", attendances_attendances_change_approval_user_path(@user), remote: true, style: "color:red; text-decoration: none;" %><%= link_to "#{@countchange1}件の通知があります", attendances_attendances_change_approval_user_path(@user), remote: true, style: "font-weight:bold; border:solid 1px; padding:1px; color:red; text-decoration: none;" %><br />
-            <% elsif @countchange1== 0 %>
+            <% if @countchange_jyotyo_a > 0 %>
+                <%= link_to "【勤怠変更申請のお知らせ】", attendances_attendances_change_approval_user_path(@user), remote: true, style: "color:red; text-decoration: none;" %><%= link_to "#{@countchange_jyotyo_a}件の通知があります", attendances_attendances_change_approval_user_path(@user), remote: true, style: "font-weight:bold; border:solid 1px; padding:1px; color:red; text-decoration: none;" %><br />
+            <% elsif @countchange_jyotyo_a == 0 %>
                 【勤怠変更申請のお知らせ】<br />
             <% end %>
 
-            <% if @countjyotyo1 > 0 %>
-                <%= link_to "【残業申請のお知らせ】", attendances_overtime_application_approval_user_path(@user), remote: true, style: "color:red; text-decoration: none;" %><%= link_to "#{@countjyotyo1}件の通知があります", attendances_overtime_application_approval_user_path(@user), remote: true, style: "font-weight:bold; border:solid 1px; padding:1px; color:red; text-decoration: none;" %><br />
-            <% elsif @countjyotyo1 == 0 %>
+            <% if @countjyotyo_jyotyo_a > 0 %>
+                <%= link_to "【残業申請のお知らせ】", attendances_overtime_application_approval_user_path(@user), remote: true, style: "color:red; text-decoration: none;" %><%= link_to "#{@countjyotyo_jyotyo_a}件の通知があります", attendances_overtime_application_approval_user_path(@user), remote: true, style: "font-weight:bold; border:solid 1px; padding:1px; color:red; text-decoration: none;" %><br />
+            <% elsif @countjyotyo_jyotyo_a == 0 %>
                 【残業申請のお知らせ】<br />
             <% end %>
         <% end %>
 
         <% if current_user.superior? && !@user_now && current_user.name=="上長2"%>
-            <% if @countapproval2 > 0 %>
-                <%= link_to "【所属長承認申請のお知らせ】", attendances_attendances_application_approval_user_path(@user), remote: true, style: "color:red; text-decoration: none;" %><%= link_to "#{@countapproval2}件の通知があります", attendances_attendances_application_approval_user_path(@user), remote: true, style: "font-weight:bold; border:solid 1px; padding:1px; color:red; text-decoration: none;" %><br />
-            <% elsif @countapproval2 == 0 %>
+            <% if @countapproval_jyotyo_b > 0 %>
+                <%= link_to "【所属長承認申請のお知らせ】", attendances_attendances_application_approval_user_path(@user), remote: true, style: "color:red; text-decoration: none;" %><%= link_to "#{@countapproval_jyotyo_b}件の通知があります", attendances_attendances_application_approval_user_path(@user), remote: true, style: "font-weight:bold; border:solid 1px; padding:1px; color:red; text-decoration: none;" %><br />
+            <% elsif @countapproval_jyotyo_b == 0 %>
                 【所属長承認申請のお知らせ】<br />
             <% end %>
 
-            <% if @countchange2 > 0 %>
-                <%= link_to "【勤怠変更申請のお知らせ】", attendances_attendances_change_approval_user_path(@user), remote: true, style: "color:red; text-decoration: none;" %><%= link_to "#{@countchange2}件の通知があります", attendances_attendances_change_approval_user_path(@user), remote: true, style: "font-weight:bold; border:solid 1px; padding:1px; color:red; text-decoration: none;" %><br />
-            <% elsif @countchange2== 0 %>
+            <% if @countchange_jyotyo_b > 0 %>
+                <%= link_to "【勤怠変更申請のお知らせ】", attendances_attendances_change_approval_user_path(@user), remote: true, style: "color:red; text-decoration: none;" %><%= link_to "#{@countchange_jyotyo_b}件の通知があります", attendances_attendances_change_approval_user_path(@user), remote: true, style: "font-weight:bold; border:solid 1px; padding:1px; color:red; text-decoration: none;" %><br />
+            <% elsif @countchange_jyotyo_b== 0 %>
                 【勤怠変更申請のお知らせ】<br />
             <% end %>
 
-            <% if @countjyotyo2 > 0 %>
-                <%= link_to "【残業申請のお知らせ】", attendances_overtime_application_approval_user_path(@user), remote: true, style: "color:red; text-decoration: none;" %><%= link_to "#{@countjyotyo2}件の通知があります", attendances_overtime_application_approval_user_path(@user), remote: true, style: "font-weight:bold; border:solid 1px; padding:1px; color:red; text-decoration: none;" %><br />
-            <% elsif @countjyotyo2 == 0 %>
+            <% if @countjyotyo_jyotyo_b > 0 %>
+                <%= link_to "【残業申請のお知らせ】", attendances_overtime_application_approval_user_path(@user), remote: true, style: "color:red; text-decoration: none;" %><%= link_to "#{@countjyotyo_jyotyo_b}件の通知があります", attendances_overtime_application_approval_user_path(@user), remote: true, style: "font-weight:bold; border:solid 1px; padding:1px; color:red; text-decoration: none;" %><br />
+            <% elsif @countjyotyo_jyotyo_b == 0 %>
                 【残業申請のお知らせ】<br />
             <% end %>
         <% end %>

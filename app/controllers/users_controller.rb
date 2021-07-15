@@ -49,13 +49,13 @@ class UsersController < ApplicationController
 
     @users = User.includes(:attendances)
     #debugger
-    @countjyotyo1 = Attendance.where(instructor_confirmation_status: "申請中" , instructor_confirmation_stamp: "上長1").count
+    @countjyotyo_jyotyo_a = Attendance.where(instructor_confirmation_status: "申請中" , instructor_confirmation_stamp: "上長1").count
     #@aaa = @users.id(params[:id])
-    @countjyotyo2 = Attendance.where(instructor_confirmation_status: "申請中" , instructor_confirmation_stamp: "上長2").count
-    @countapproval1 = Attendance.where(month_attendances_approval_status: "申請中" , month_attendances_approval_stamp: "上長1").distinct.count(:month)
-    @countapproval2 = Attendance.where(month_attendances_approval_status: "申請中" , month_attendances_approval_stamp: "上長2").distinct.count(:month)
-    @countchange1 = Attendance.where(change_application_status: "申請中" , change_application_stamp: "上長1").count
-    @countchange2 = Attendance.where(change_application_status: "申請中" , change_application_stamp: "上長2").count
+    @countjyotyo_jyotyo_b = Attendance.where(instructor_confirmation_status: "申請中" , instructor_confirmation_stamp: "上長2").count
+    @countapproval_jyotyo_a = Attendance.where(month_attendances_approval_status: "申請中" , month_attendances_approval_stamp: "上長1").distinct.count(:month)
+    @countapproval_jyotyo_b = Attendance.where(month_attendances_approval_status: "申請中" , month_attendances_approval_stamp: "上長2").distinct.count(:month)
+    @countchange_jyotyo_a = Attendance.where(change_application_status: "申請中" , change_application_stamp: "上長1").count
+    @countchange_jyotyo_b = Attendance.where(change_application_status: "申請中" , change_application_stamp: "上長2").count
     #debugger
     @user_now = User.find(params[:usernow]) if params[:usernow]
     #debugger
