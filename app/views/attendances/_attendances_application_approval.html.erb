@@ -25,7 +25,7 @@
             </thead>
             <tbody>
             <% user.attendances.each do |day| %>
-            <% puts user.attendances.group(:month).count %>
+            <%# puts user.attendances.group(:month).count %>
             <%# day.group(:month).each do |dayattendance| %>
             <%# debugger %>
             <%# end %>
@@ -71,7 +71,7 @@
                 </tr>
             </thead>
             <tbody>
-            <% user.attendances.where.not(month: nil).order(nil).group(:month).each do |day| %>
+            <% user.attendances.where.not(month: nil).select(:month, :month_attendances_approval_status).order(user_id: "desc").distinct.each do |day| %>
             <%= f.fields_for "attendances[]",day do |attendance| %>
                 <% if day.month_attendances_approval_status == "申請中" %>
                         <tr>
