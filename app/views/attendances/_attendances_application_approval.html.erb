@@ -25,6 +25,9 @@
             </thead>
             <tbody>
             <% user.attendances.each do |day| %>
+            <%# day.group(:month).each do |dayattendance| %>
+            <%# debugger %>
+            <%# end %>
             <%= f.fields_for "attendances[]",day do |attendance| %>
                 <% if day.month_attendances_approval_status == "申請中" %>
                 <%# debugger %>
@@ -40,6 +43,7 @@
                         <% end %></td>
                         <td><%= link_to "確認", user_path(user, usernow: @user.id), class: "btn btn-primary" %></td>
                         </tr>
+                
                 <% end %>
               <% end %>
             <% end %>
@@ -66,7 +70,7 @@
                 </tr>
             </thead>
             <tbody>
-            <% user.attendances.group(:month).each do |day| %>
+            <% user.attendances.where.not(month: nil).group(:month).each do |day| %>
             <%= f.fields_for "attendances[]",day do |attendance| %>
                 <% if day.month_attendances_approval_status == "申請中" %>
                         <tr>
