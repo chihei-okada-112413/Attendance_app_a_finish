@@ -140,11 +140,11 @@ class AttendancesController < ApplicationController
   def attendances_change_approval
     #@users = User.where(id: Attendance.where(change_application_status: "申請中", ).select(:user_id))
     #@users1 = User.where(id: Attendance.where(change_application_status: "申請中", change_application_stamp: "上長1",).select(:user_id), superior: true)
-    @users_attendances_change_approval_jyotyo_a = User.where(id: Attendance.where(change_application_status: "申請中", change_application_stamp: "上長1").select(:user_id))#.where("name = ? or superior = ?", "上長2", "false")
+    @users_attendances_change_approval_jyotyo_a = User.where(id: Attendance.where(change_application_status: "申請中", change_application_stamp: "上長1").select(:user_id).order(nil))#.where("name = ? or superior = ?", "上長2", "false")
     #@users1 = @users1.where("name: '上長2' and  ")
     #,name: "上長2", superior: "true"),User.where(id: Attendance.where(change_application_status: "申請中", change_application_stamp: "上長1").select(:user_id), superior: "false"))
     
-    @users_attendances_change_approval_jyotyo_b = User.where(id: Attendance.where(change_application_status: "申請中", change_application_stamp: "上長2").select(:user_id))
+    @users_attendances_change_approval_jyotyo_b = User.where(id: Attendance.where(change_application_status: "申請中", change_application_stamp: "上長2").select(:user_id).order(nil))
 
     @attendance = Attendance.where(instructor_confirmation_status: "申請中")
   end
