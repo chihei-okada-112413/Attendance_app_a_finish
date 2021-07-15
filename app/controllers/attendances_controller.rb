@@ -180,8 +180,8 @@ class AttendancesController < ApplicationController
 
   # 一か月分の勤怠 申請 確認
   def attendances_application_approval
-    @users_attendances_application_approval_jyotyo_a = User.where(id: Attendance.where(month_attendances_approval_status: "申請中", month_attendances_approval_stamp: "上長1").select(:user_id).order(nil))
-    @users_attendances_application_approval_jyotyo_b = User.where(id: Attendance.where(month_attendances_approval_status: "申請中", month_attendances_approval_stamp: "上長2").select(:user_id).order(nil))
+    @users_attendances_application_approval_jyotyo_a = User.where(id: Attendance.where(month_attendances_approval_status: "申請中", month_attendances_approval_stamp: "上長1").select(:user_id))
+    @users_attendances_application_approval_jyotyo_b = User.where(id: Attendance.where(month_attendances_approval_status: "申請中", month_attendances_approval_stamp: "上長2").select(:user_id))
     #@attendances = Attendance.where(month_attendances_approval_status: "申請中").group(:month)
     #debugger
   end
