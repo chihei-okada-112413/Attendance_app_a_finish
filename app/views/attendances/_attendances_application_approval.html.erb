@@ -25,10 +25,9 @@
             </thead>
             <tbody>
             <% user.attendances.each do |day| %>
-            <%# puts user.attendances.group(:month).count %>
-            <%# day.group(:month).each do |dayattendance| %>
-            <%# debugger %>
-            <%# end %>
+            <% if @month_check != day.month %>
+            <% @month_check = day.month if !day.month.nil? %>
+
             <%= f.fields_for "attendances[]",day do |attendance| %>
                 <% if day.month_attendances_approval_status == "申請中" %>
                 <%# debugger %>
@@ -44,7 +43,7 @@
                         <% end %></td>
                         <td><%= link_to "確認", user_path(user, usernow: @user.id), class: "btn btn-primary" %></td>
                         </tr>
-                
+                <% end %>
                 <% end %>
               <% end %>
             <% end %>
@@ -71,8 +70,10 @@
                 </tr>
             </thead>
             <tbody>
-            <% user.attendances.where.not(month: nil).select(:month, :month_attendances_approval_status, :month_attendances_approval_change, :id).distinct.each do |day| %>
-            <%= f.fields_for "attendances[]",day do |attendance| %>
+            <% user.attendances.each do |day| %>
+              <% if @month_check != day.month %>
+              <% @month_check = day.month if !day.month.nil? %>
+              <%= f.fields_for "attendances[]",day do |attendance| %>
                 <% if day.month_attendances_approval_status == "申請中" %>
                         <tr>
                         <%= attendance.hidden_field :ap_month, value: day.month %>
@@ -86,9 +87,14 @@
                         <% end %></td>
                         <td><%= link_to "確認", user_path(user, usernow: @user.id), class: "btn btn-primary" %></td>
                         </tr>
-                        <% end %>
-                        <% end %>
-                        <% end %>
+                  <% end %>
+              <% end %>
+              <% end %>
+
+
+
+
+            <% end %>
             </tbody>
             </table>
         </div>
