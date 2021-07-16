@@ -222,8 +222,9 @@ class AttendancesController < ApplicationController
         @attendances.each do |at|
           if params[:user][:attendances][id][:month_attendances_approval_change] == "1"
             at.update_attributes!(item)
+            at.update(month: nil)
             if update_attendances_application_params[id][:month_attendances_approval_status] == "なし"
-              at.update(month_attendances_approval_status: nil, month_attendances_approval_change: nil, month_attendances_approval_stamp: nil) 
+              at.update(month_attendances_approval_status: nil, month_attendances_approval_change: nil, month_attendances_approval_stamp: nil, month: nil) 
             end
           end
         end
