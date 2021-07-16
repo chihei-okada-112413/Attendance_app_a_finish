@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:sindex, :index, :show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info ]
   before_action :correct_user, only: [:edit, :update, :show]
   before_action :admin_user, only:[:destroy, :edit_basic_info, :update_basic_info, :index, :sindex]
+  before_action :admin_user?, only:[:show]
   before_action :set_one_month, only:[:show ]
   
   def index
@@ -63,7 +64,7 @@ class UsersController < ApplicationController
 
   def send_attendances_csv(attendandes)
     csv_data = CSV.generate do |csv|
-      header = %w(worked_on started_at finished_at)
+      header = %w(日付 出勤時間 退勤時間)
       csv << header
 
       @attendances.each do |attendance|
@@ -162,5 +163,9 @@ class UsersController < ApplicationController
       
       def admin_user
         redirect_to root_url unless current_user.admin?
+      end
+
+      def admin_user?
+        redirect_to root_url if current_user.admin?
       end
 end

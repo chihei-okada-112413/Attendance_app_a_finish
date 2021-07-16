@@ -4,6 +4,7 @@ class AttendancesController < ApplicationController
   before_action :admin_or_correct_user, onry: [:update, :edit_one_month, :update_one_month, :overtime_application, :update_overtime, :overtime_application_approval, 
   :update_overtime_approval, :update_application, :update_attendances_application ,:attendances_application_approval,:update_attendances_application_approval, :update_attendances_change, :attendances_change_approval, :attendances_change_history_log]
   before_action :set_one_month, only: [:edit_one_month, :overtime_application, :overtime_application_approval, :update_attendances_application ,:update_attendances_application_approval, :update_attendances_change_approval, :attendances_change_history_log, :update_attendances_change]
+  before_action :admin_user?, only:[:edit_one_month]
   
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
   
@@ -84,7 +85,7 @@ class AttendancesController < ApplicationController
     else
       #redirect_to attendances_attendances_change_history_log_user_path
     end
-
+    
     
 
     
@@ -148,14 +149,25 @@ class AttendancesController < ApplicationController
       if params[:user][:attendances][id][:change_application_change] == "1"
         attendance = Attendance.find(id)
         attendance.update_attributes!(item)
+      if update_attendances_change_apploval_params[id][:change_application_status] == "なし"
+          attendance.update(change_application_started_time: nil, change_application_finished_time: nil, change_application_stamp: nil,change_application_note: nil, change_application_status: nil) 
+      elsif update_attendances_change_apploval_params[id][:change_application_status] == "否認"
+      
+      else
         attendance.update(started_at: attendance.change_application_started_time)
         attendance.update(finished_at: attendance.change_application_finished_time)
         if attendance.before_change_started_time.nil?
-          attendance.update(before_change_started_time: attendance.change_application_started_time)
-          if attendance.before_change_finish_time.nil?
-            attendance.update(before_change_finish_time: attendance.change_application_started_time)
+          if attendance.started_at.present?
+          attendance.update(before_change_started_time: attendance.started_at)
           end
         end
+        if attendance.before_change_finish_time.nil?
+          if attendance.finished_at.present?
+            attendance.update(before_change_finish_time: attendance.finished_at)
+          end
+        end
+      end
+
       end
     end
     redirect_to user_url
@@ -206,8 +218,13 @@ class AttendancesController < ApplicationController
         @attendances.each do |at|
           if params[:user][:attendances][id][:month_attendances_approval_change] == "1"
             at.update_attributes!(item)
+            if update_attendances_application_params[id][:month_attendances_approval_status] == "なし"
+              at.update(month_attendances_approval_status: nil, month_attendances_approval_change: nil, month_attendances_approval_stamp: nil) 
+            end
           end
         end
+        
+      
       #debugger
         #user.each do |u|
         #  u.attendances.whrer(month: params[:date].to_date.month)
@@ -263,6 +280,10 @@ class AttendancesController < ApplicationController
       if params[:user][:attendances][id][:overtime_approval_change] == "1"
         attendance = Attendance.find(id)
         attendance.update_attributes!(item)
+        
+        if overtime_application_approval_params[id][:instructor_confirmation_status] == "なし"
+          attendance.update(scheduled_end_time: nil, office_work_contents: nil, instructor_confirmation_stamp: nil,instructor_confirmation_status: nil)        
+        end
       end
     end
     redirect_to @user

@@ -126,10 +126,15 @@
                     <%= $days_of_the_week[day.worked_on.wday] %>
                 </td>
                 <% end %>
-                <% if day.change_application_status == "申請中" %>
+                
+                <% if day.change_application_status == "承認" %>
                 <td><%= l(day.change_application_started_time, format: :time_h) if day.change_application_started_time.present? %></td>
                 <td><%= time_fix(l(day.change_application_started_time, format: :time_m).to_i) if day.change_application_started_time.present? %></td>
-                <% else%>
+
+                <% elsif day.change_application_status == "申請中" %>
+                <td><%= l(day.started_at, format: :time_h) if day.started_at.present? %></td>
+                <td><%= time_fix(l(day.started_at, format: :time_m).to_i) if day.started_at.present? %></td>
+                <% else %>
                 <td><%= l(day.started_at, format: :time_h) if day.started_at.present? %></td>
                 <td><%= time_fix(l(day.started_at, format: :time_m).to_i) if day.started_at.present? %></td>
                 <% end %>
@@ -138,10 +143,13 @@
                 <% if (Date.current == day.worked_on) && day.started_at.nil? %>
                         <%= link_to "出勤", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %> 
                     <% end %><% end %></td>
-                <% if day.change_application_status == "申請中" %>
+                <% if day.change_application_status == "承認" %>
                 <td><%= l(day.change_application_finished_time, format: :time_h) if day.change_application_finished_time.present? %></td>
                 <td><%= time_fix(l(day.change_application_finished_time, format: :time_m).to_i) if day.change_application_finished_time.present? %></td>
-                 <% else%>
+                 <% elsif day.change_application_status == "申請中" %>
+                <td><%= l(day.finished_at, format: :time_h) if day.finished_at.present? %></td>
+                <td><%= time_fix(l(day.finished_at, format: :time_m).to_i) if day.finished_at.present? %></td>
+                <% else %>
                 <td><%= l(day.finished_at, format: :time_h) if day.finished_at.present? %></td>
                 <td><%= time_fix(l(day.finished_at, format: :time_m).to_i) if day.finished_at.present? %></td>
                  <% end %>
@@ -151,13 +159,19 @@
       <% end %></td>
                 
                 <td>
-                <% if day.change_application_status == "申請中" %>
+                <% if day.change_application_status == "承認" %>
                     <% if day.change_application_started_time.present? && day.change_application_finished_time.present? %>
                         <% if day.change_application_next_day == 0 %>
                         <%= working_time_chage(working_time_start_chage(day.change_application_started_time), working_time_finish_chage(day.change_application_finished_time)) %>
                         <% else %>
                         <%= working_time_chage_next(working_time_start_chage(day.change_application_started_time), day.change_application_finished_time) %>
                         <% end %>
+                    <% end %>
+                <% elsif day.change_application_status == "申請中" %>
+                    <% if day.started_at.present? && day.finished_at.present? %>
+                    <%= str_times = working_time(day.started_at , day.finished_at) %>
+                    <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
+                    <%#= debugger%>
                     <% end %>
                 <% else %>
                     <% if day.started_at.present? && day.finished_at.present? %>

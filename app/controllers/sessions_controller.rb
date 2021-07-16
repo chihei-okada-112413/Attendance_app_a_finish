@@ -8,7 +8,11 @@ class SessionsController < ApplicationController
       # ログイン後にユーザー情報ページにリダイレクト。
       log_in user
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+      if user.admin?
+        redirect_back_or users_url
+      else
       redirect_back_or user
+      end
     else
       # エラーメッセージ用のflashを入れる
       flash.now[:danger] = "認証に失敗しました。"

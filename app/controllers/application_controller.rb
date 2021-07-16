@@ -33,6 +33,13 @@ class ApplicationController < ActionController::Base
           redirect_to root_url
         end
       end
+
+      def admin_user?
+        if current_user.admin?
+          flash[:danger] = "権限がないため表示できません。"
+          redirect_to root_url
+        end
+      end
       
   # ページ出力前に１か月分のレコードを検索し取得。
   def set_one_month

@@ -59,7 +59,7 @@
                         </td>
                         <td>
                         <%= attendance.label :instructor_confirmation_status, class: "label-#{yield(:class_text)} hidden" %>
-                        <%= attendance.select :instructor_confirmation_status,[["なし"],["申請中"],["承認"],["否認"]] ,class: "form-control" %>
+                        <%= attendance.select :instructor_confirmation_status,[["なし"],["申請中"],["承認"],["否認"]] ,include_blank: true, selected: nil, class: "form-control" %>
                         </td>
                         <td><%= attendance.label :overtime_approval_change, class: "check_box inline checkbox-over_time_application", for: "next_day" do %>
                             <%= attendance.check_box :overtime_approval_change, checked: false, id: "overtime_approval_change" %>

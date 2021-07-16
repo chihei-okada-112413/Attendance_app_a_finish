@@ -68,16 +68,16 @@
                         
                         <td><%= $days_of_the_week[day.worked_on.wday] %> </td>
                         
-                        <td><%= l(day.started_at, format: :time_h).to_i if day.started_at.present? %></td>
+                        <td><%= l(day.before_change_started_time, format: :time_h).to_i if day.before_change_started_time.present? %></td>
 
                         <td>
-                        <%= time_fix(l(day.started_at, format: :time_m).to_i) if day.finished_at.present? %>
+                        <%= time_fix(l(day.before_change_started_time, format: :time_m).to_i) if day.before_change_started_time.present? %>
                         </td>
 
-                        <td><%= l(day.started_at, format: :time_h).to_i if day.finished_at.present? %></td>
+                        <td><%= l(day.before_change_finish_time, format: :time_h).to_i if day.before_change_finish_time.present? %></td>
 
                         <td>
-                        <%= time_fix(l(day.finished_at, format: :time_m).to_i) if day.finished_at.present? %>
+                        <%= time_fix(l(day.before_change_finish_time, format: :time_m).to_i) if day.before_change_finish_time.present? %>
                         </td>
                         
                         <td><%= l(day.change_application_started_time, format: :time_h).to_i if day.change_application_started_time.present? %></td>
@@ -168,6 +168,7 @@
             <%# debugger %>
                 <%= f.fields_for "attendances[]", day do |attendance| %>
                 <% if day.change_application_status == "申請中" %>
+                
                         <tr>
                         <%= attendance.hidden_field :change_application_status, :value => "承認" %>
 
@@ -175,16 +176,16 @@
                         
                         <td><%= $days_of_the_week[day.worked_on.wday] %> </td>
                         
-                        <td><%= l(day.started_at, format: :time_h).to_i if day.started_at.present? %></td>
+                        <td><%= l(day.before_change_started_time, format: :time_h).to_i if day.before_change_started_time.present? %></td>
 
                         <td>
-                        <%= time_fix(l(day.started_at, format: :time_m).to_i) if day.finished_at.present? %>
+                        <%= time_fix(l(day.before_change_started_time, format: :time_m).to_i) if day.before_change_started_time.present? %>
                         </td>
 
-                        <td><%= l(day.started_at, format: :time_h).to_i if day.finished_at.present? %></td>
+                        <td><%= l(day.before_change_finish_time, format: :time_h).to_i if day.before_change_finish_time.present? %></td>
 
                         <td>
-                        <%= time_fix(l(day.finished_at, format: :time_m).to_i) if day.finished_at.present? %>
+                        <%= time_fix(l(day.before_change_finish_time, format: :time_m).to_i) if day.before_change_finish_time.present? %>
                         </td>
                         
                         <td><%= l(day.change_application_started_time, format: :time_h).to_i if day.change_application_started_time.present? %></td>

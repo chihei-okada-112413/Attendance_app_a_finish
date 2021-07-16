@@ -68,10 +68,10 @@
                 <td>
                 <% if @user.name == "上長1" %>
                 <%= attendance.label :change_application_stamp, class: "label-#{yield(:class_text)} hidden" %>
-                        <%= attendance.select :change_application_stamp,[["上長2"]] ,include_blank: true, celected: nil , class: "form-control" %>
+                        <%= attendance.select :change_application_stamp,[["上長2"]] ,include_blank: true, selected: nil , class: "form-control" %>
                 <% elsif @user.name == "上長2"%>
                 <%= attendance.label :change_application_stamp, class: "label-#{yield(:class_text)} hidden" %>
-                        <%= attendance.select :change_application_stamp,[["上長1"]] , include_blank: true ,class: "form-control" %>
+                        <%= attendance.select :change_application_stamp,[["上長1"]] , include_blank: true , selected: nil ,class: "form-control" %>
                 <% else %>
                 <%= attendance.label :change_application_stamp, class: "label-#{yield(:class_text)} hidden" %>
                         <%= attendance.select :change_application_stamp,[["上長1"],["上長2"]] ,include_blank: true, selected: nil, class: "form-control" %>
