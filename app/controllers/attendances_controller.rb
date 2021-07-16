@@ -207,7 +207,7 @@ class AttendancesController < ApplicationController
   def update_attendances_application_approval
     #@attendance = params[:user][:attendance][:month_attendances_approval_status]
     #debugger
-    
+    ActiveRecord::Base.transaction do
     update_attendances_application_params.each do |id, item|
       #attendance = Attendance.find(id)
       user = User.find(Attendance.find(id).user_id)#User.find(id: Attendance.find(id).user_id)
@@ -235,7 +235,7 @@ class AttendancesController < ApplicationController
         #  u.attendances.whrer(month: params[:date].to_date.month)
         #end
     end
-
+    end
 
     #@attendances.each do |at|
       #at.update_attributes!(update_attendances_application_params)
