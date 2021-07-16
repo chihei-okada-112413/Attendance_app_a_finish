@@ -177,16 +177,20 @@ class AttendancesController < ApplicationController
   def update_attendances_application
     #debugger
     #@attendance = @user.attendances
-    if params[:attendance][:month_attendances_approval_stamp] == ""
-    flash[:danger]="申請者を選択してください。"
-    else
-      @attendances.each do |at|
-      #debugger
-      at.update_attributes!(attendances_application_params)
-      at.update(month: User.find(at.user_id).uid + params[:date].to_date.month.to_s)
+    ActiveRecord::Base.transaction do
+      if params[:attendance][:month_attendances_approval_stamp] == ""
+      flash[:danger]="申請者を選択してください。"
+      else
+        @attendances.each do |at|
+        #debugger
+        at.update_attributes!(attendances_application_params)
+        at.update(month: format("%02d", params[:date].to_date.month.to_s ) + User.find(at.user_id).uid)
+        
+        end
+        flash[:success]="所属長承認を申請しました。"
       end
-      flash[:success]="所属長承認を申請しました。"
     end
+    #debugger
     redirect_to @user
   end
 

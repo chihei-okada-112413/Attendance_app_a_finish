@@ -33,7 +33,13 @@
                 <%# debugger %>
                         <tr>
                         <%= attendance.hidden_field :ap_month, value: day.month %>
-                        <td><%= day.month.delete(user.uid) %>月</td>
+                        <td><%# debugger %>
+                        <% if day.month.slice(0,2)[0] == "0" %>
+                        <%= day.month.slice(1,1) %>
+                        <% else %>
+                        <%= day.month.slice(0,2) %>
+                        <% end %>
+                        月</td>
                         <td>
                         <%= attendance.label :month_attendances_approval_status, class: "label-#{yield(:class_text)} hidden" %>
                         <%= attendance.select :month_attendances_approval_status,[["なし"],["申請中"],["承認"],["否認"]] ,class: "form-control" %>
@@ -77,7 +83,14 @@
                 <% if day.month_attendances_approval_status == "申請中" %>
                         <tr>
                         <%= attendance.hidden_field :ap_month, value: day.month %>
-                        <td><%= day.month.delete(user.uid) %>月</td>
+                        <td>
+                        <%# debugger %>
+                        <% if day.month.slice(0,2)[0] == "0" %>
+                        <%= day.month.slice(1,1) %>
+                        <% else %>
+                        <%= day.month.slice(0,2) %>
+                        <% end %>
+                        月</td>
                         <td>
                         <%= attendance.label :month_attendances_approval_status, class: "label-#{yield(:class_text)} hidden" %>
                         <%= attendance.select :month_attendances_approval_status,[["なし"],["申請中"],["承認"],["否認"]] ,class: "form-control" %>
